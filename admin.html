@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetuSaathi — System Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182339;--ink-soft:#4B5468;--paper:#F5F1E6;--paper-card:#FCFAF3;
+    --rule:#DAD1BC;--brass:#9C7A3C;--brass-deep:#7C5E2A;--success:#33604A;--warning:#A6763C;--radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.6;padding-bottom:60px;}
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;color:var(--ink);}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(245,241,230,0.92);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--ink);}
+  .brand-name{font-family:'Source Serif 4',serif;font-size:1.15rem;}
+
+  .container{max-width:1080px;margin:40px auto 0;padding:0 6%;}
+
+  .privacy-notice{background:rgba(156,122,60,0.06);border:1px solid rgba(156,122,60,0.3);border-radius:3px;padding:14px 20px;font-size:.85rem;color:var(--brass-deep);margin-bottom:30px;}
+
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:32px;}
+  .stat-card{background:var(--paper-card);border:1px solid var(--rule);padding:22px;border-radius:var(--radius);}
+  .stat-label{font-size:.78rem;color:var(--ink-soft);}
+  .stat-num{font-size:1.7rem;font-weight:600;color:var(--ink);margin-top:6px;font-family:'Source Serif 4',serif;}
+
+  .logs-card{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:26px;}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.88rem;}
+  th{text-align:left;padding:11px;border-bottom:1px solid var(--rule);color:var(--ink-soft);font-size:.72rem;letter-spacing:.5px;}
+  td{padding:13px 11px;border-bottom:1px solid rgba(218,209,188,0.6);}
+  .masked{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand"><span class="brand-mark">S</span><span class="brand-name">SetuSaathi</span></a>
+  <span style="font-size:.85rem;color:var(--ink-soft);">System admin · least-privilege view</span>
+</nav>
+
+<div class="container">
+
+  <div class="privacy-notice">
+    Minimum information access: dashboard shows telemetry and system health only. Personal data is masked.
+  </div>
+
+  <h2 style="margin-bottom:20px;">System health &amp; routing telemetry</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Active rule engine nodes</div><div class="stat-num">14</div></div>
+    <div class="stat-card"><div class="stat-label">Clearances processed today</div><div class="stat-num">1,248</div></div>
+    <div class="stat-card"><div class="stat-label">ML anomaly rate</div><div class="stat-num" style="color:var(--success);">3.2%</div></div>
+  </div>
+
+  <div class="logs-card">
+    <h3 style="font-size:1.05rem;margin-bottom:10px;">Anonymized transaction log</h3>
+    <table>
+      <thead><tr><th>Time</th><th>Applicant hash</th><th>Target dept</th><th>Event</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>10:42:15 AM</td><td class="masked">apl_98a7f****31a</td><td>Food Safety Dept</td><td>Clearance auto-routed</td><td style="color:var(--success);">Success</td></tr>
+        <tr><td>10:39:02 AM</td><td class="masked">apl_12b8c****90d</td><td>Municipal Corp</td><td>Lease doc anomaly tagged</td><td style="color:var(--warning);">ML flagged</td></tr>
+        <tr><td>10:15:40 AM</td><td class="masked">apl_44d1e****88c</td><td>Fire Dept</td><td>Digital license issued</td><td style="color:var(--success);">Success</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

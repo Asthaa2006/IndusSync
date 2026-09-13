@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetuSaathi — Applicant Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182339;--ink-soft:#4B5468;--paper:#F5F1E6;--paper-card:#FCFAF3;
+    --rule:#DAD1BC;--brass:#9C7A3C;--brass-deep:#7C5E2A;--sage:#33604A;--radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.6;padding-bottom:60px;}
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;color:var(--ink);}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(245,241,230,0.92);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--ink);}
+  .brand-name{font-family:'Source Serif 4',serif;font-size:1.15rem;}
+  .nav-actions{display:flex;align-items:center;gap:20px;}
+  .logout-link{color:var(--ink-soft);text-decoration:none;font-size:.85rem;}
+  .logout-link:hover{color:var(--ink);}
+
+  .container{max-width:1160px;margin:44px auto 0;padding:0 6%;}
+
+  .status-header{
+    background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);
+    padding:26px 30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;margin-bottom:36px;
+  }
+  .status-badge{background:rgba(51,96,74,0.08);border:1px solid rgba(51,96,74,0.3);color:var(--sage);font-size:.78rem;padding:4px 12px;border-radius:20px;font-weight:500;display:inline-block;margin-bottom:8px;}
+  .status-header h1{font-size:1.5rem;}
+  .status-header .sub{color:var(--ink-soft);font-size:.88rem;margin-top:4px;}
+  .id-box{text-align:right;}
+  .id-box .lbl{font-size:.78rem;color:var(--ink-soft);}
+  .id-box .val{font-size:1.05rem;font-family:'IBM Plex Mono',monospace;color:var(--brass-deep);}
+
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;}
+  .dash-card{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:28px;}
+  .card-title{font-size:1.02rem;font-weight:500;color:var(--ink);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;font-family:'Source Serif 4',serif;}
+  .card-title .count{font-family:'IBM Plex Sans',sans-serif;font-size:.78rem;color:var(--ink-soft);font-weight:400;}
+
+  .item-list{display:flex;flex-direction:column;gap:12px;}
+  .list-item{background:var(--paper);border:1px solid var(--rule);padding:13px 16px;border-radius:3px;display:flex;justify-content:space-between;align-items:center;font-size:.9rem;gap:10px;}
+  .item-sub{font-size:.78rem;color:var(--ink-soft);}
+  .tag-ok{color:var(--sage);font-size:.78rem;white-space:nowrap;}
+  .tag-reuse{color:var(--brass-deep);font-size:.78rem;white-space:nowrap;}
+  .tag-pending{color:var(--ink-soft);font-size:.78rem;white-space:nowrap;}
+
+  .cta-card{background:linear-gradient(135deg,var(--paper-card) 0%,#F1E8D4 100%);border:1px solid var(--brass);}
+  .cta-btn{display:inline-block;background:var(--ink);color:var(--paper);padding:12px 22px;border-radius:3px;font-weight:500;text-decoration:none;font-size:.9rem;margin-top:12px;}
+  .cta-btn:hover{background:var(--brass-deep);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand"><span class="brand-mark">S</span><span class="brand-name">SetuSaathi</span></a>
+  <div class="nav-actions">
+    <span style="font-size:.85rem;color:var(--ink-soft);">Welcome, Ayush Sharma</span>
+    <a href="index.html" class="logout-link">Sign out</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="status-header">
+    <div>
+      <div class="status-badge">✓ Profile verified</div>
+      <h1>Applicant dashboard</h1>
+      <p class="sub">Identity verified through SetuSaathi onboarding</p>
+    </div>
+    <div class="id-box">
+      <div class="lbl">Applicant ID</div>
+      <div class="val">APL-2026-0889</div>
+    </div>
+  </div>
+
+  <div class="dash-grid">
+
+    <div class="dash-card cta-card">
+      <div class="card-title">Open a business</div>
+      <p style="color:var(--ink-soft);font-size:.9rem;margin-bottom:8px;">
+        The rule engine resolves requirements instantly and reuses your verified documents.
+      </p>
+      <a href="apply-wizard.html" class="cta-btn">+ Start a new business clearance</a>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-title">Your profile</div>
+      <div class="item-list">
+        <div class="list-item">
+          <div><div>Full name</div><div class="item-sub">Ayush Sharma</div></div>
+          <span class="tag-ok">Verified</span>
+        </div>
+        <div class="list-item">
+          <div><div>Linked identification</div><div class="item-sub">ID proof on file</div></div>
+          <span class="tag-ok">Verified</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-title">Your licenses <span class="count">2 active</span></div>
+      <div class="item-list">
+        <div class="list-item">
+          <div><div>FSSAI food registration</div><div class="item-sub">Reg #215240019201</div></div>
+          <span class="tag-ok">Active</span>
+        </div>
+        <div class="list-item">
+          <div><div>GUMASTA / shop establishment</div><div class="item-sub">Reg #MP-IND-2025-99</div></div>
+          <span class="tag-ok">Active</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-title">Your library <span class="count">reusable vault</span></div>
+      <div class="item-list">
+        <div class="list-item">
+          <div><div>FSSAI training certificate</div><div class="item-sub">Person-bound</div></div>
+          <span class="tag-reuse">Auto-reused</span>
+        </div>
+        <div class="list-item">
+          <div><div>Identity &amp; Address proof</div><div class="item-sub">Person-bound · verified</div></div>
+          <span class="tag-reuse">Auto-reused</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-title">Recent activity</div>
+      <div class="item-list">
+        <div class="list-item">
+          <div><div>Health NOC routed to Municipal Corp</div><div class="item-sub">2 hours ago</div></div>
+          <span class="tag-pending">In review</span>
+        </div>
+        <div class="list-item">
+          <div><div>FSSAI registration approved</div><div class="item-sub">Yesterday</div></div>
+          <span class="tag-ok">Approved</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

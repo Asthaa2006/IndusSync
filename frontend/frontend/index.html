@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetuSaathi — One profile. Every approval, connected.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#182339;
+    --ink-soft:#4B5468;
+    --paper:#F5F1E6;
+    --paper-card:#FCFAF3;
+    --rule:#DAD1BC;
+    --brass:#9C7A3C;
+    --brass-deep:#7C5E2A;
+    --sage:#33604A;
+    --rust:#8F3B2A;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;color:var(--ink);}
+  a{color:inherit;}
+
+  body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:radial-gradient(rgba(24,35,57,0.035) 1px, transparent 1px);
+    background-size:3px 3px;
+    opacity:.5;
+  }
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 6%;
+    background:rgba(245,241,230,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{
+    width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--ink);
+  }
+  .brand-name{font-family:'Source Serif 4',serif;font-size:1.15rem;color:var(--ink);}
+  .nav-right{display:flex;align-items:center;gap:28px;}
+  .nav-link{font-size:.92rem;color:var(--ink-soft);text-decoration:none;}
+  .nav-link:hover{color:var(--ink);}
+  .btn-signin{
+    font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:500;
+    background:var(--ink);color:var(--paper);
+    border:none;padding:10px 22px;border-radius:var(--radius);cursor:pointer;
+  }
+  .btn-signin:hover{background:var(--brass-deep);}
+
+  .hero{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:center;
+    padding:80px 6% 70px;max-width:1280px;margin:0 auto;
+  }
+  .hero-kicker{font-size:.85rem;color:var(--brass-deep);font-weight:500;margin-bottom:14px;}
+  .hero h1{font-size:clamp(2.1rem,3.6vw,3.25rem);line-height:1.18;max-width:620px;}
+  .hero p.lead{margin-top:20px;font-size:1.05rem;color:var(--ink-soft);max-width:520px;}
+  .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink);color:var(--paper);padding:13px 26px;border-radius:var(--radius);
+    text-decoration:none;font-weight:500;font-size:.95rem;border:1px solid var(--ink);
+  }
+  .btn-primary:hover{background:var(--brass-deep);border-color:var(--brass-deep);}
+  .btn-outline{
+    background:transparent;color:var(--ink);padding:13px 26px;border-radius:var(--radius);
+    text-decoration:none;font-weight:500;font-size:.95rem;border:1px solid var(--ink);cursor:pointer;
+  }
+  .btn-outline:hover{background:var(--paper-card);}
+
+  .stamp-wrap{position:relative;display:flex;justify-content:center;align-items:center;height:340px;}
+  .stamp-doc{
+    width:230px;height:290px;background:var(--paper-card);border:1px solid var(--rule);
+    border-radius:2px;box-shadow:0 18px 40px rgba(24,35,57,0.10);
+    padding:22px 20px;position:relative;
+  }
+  .stamp-doc .ln{height:6px;background:var(--rule);border-radius:2px;margin-bottom:10px;}
+  .stamp-doc .ln.w60{width:60%;} .stamp-doc .ln.w80{width:80%;} .stamp-doc .ln.w40{width:40%;}
+  .seal{
+    position:absolute;width:118px;height:118px;border-radius:50%;
+    border:3px solid var(--rust);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Source Serif 4',serif;color:var(--rust);
+    font-size:.68rem;letter-spacing:1.5px;text-align:center;line-height:1.3;
+    top:58%;left:58%;transform:translate(-50%,-50%) rotate(-14deg) scale(2.2);
+    opacity:0;
+    animation:stamp-down 0.55s cubic-bezier(.2,.9,.25,1) 0.5s forwards;
+    background:transparent;
+  }
+  .seal::before{
+    content:"";position:absolute;inset:6px;border:1px solid var(--rust);border-radius:50%;
+  }
+  @keyframes stamp-down{
+    0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(2.6);}
+    60%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(0.92);}
+    100%{opacity:0.92;transform:translate(-50%,-50%) rotate(-14deg) scale(1);}
+  }
+
+  .section{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:70px 6%;}
+  .section-head{max-width:640px;margin-bottom:36px;}
+  .section-head h2{font-size:1.8rem;}
+  .section-head p{color:var(--ink-soft);margin-top:10px;font-size:.98rem;}
+
+  .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);}
+  .problem-card{background:var(--paper-card);padding:28px 26px;}
+  .problem-card h3{font-size:1.05rem;font-weight:500;margin-bottom:8px;}
+  .problem-card p{color:var(--ink-soft);font-size:.9rem;}
+
+  .flow-section{background:var(--ink);color:var(--paper);}
+  .flow-section .section-head h2{color:var(--paper);}
+  .flow-section .section-head p{color:#B9BFCC;}
+  .flow-list{border-top:1px solid rgba(245,241,230,0.18);}
+  .flow-step{
+    display:grid;grid-template-columns:52px 1fr;gap:22px;
+    padding:20px 0;border-bottom:1px solid rgba(245,241,230,0.18);
+  }
+  .flow-num{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--brass);padding-top:3px;}
+  .flow-step h3{color:var(--paper);font-size:1.02rem;font-weight:500;margin-bottom:4px;}
+  .flow-step p{color:#B9BFCC;font-size:.9rem;max-width:640px;}
+
+  .scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);}
+  .scope-col{padding:30px 30px;background:var(--paper-card);}
+  .scope-col + .scope-col{border-left:1px solid var(--rule);}
+  .scope-col h3{font-size:.95rem;text-transform:none;color:var(--ink-soft);font-weight:500;margin-bottom:14px;font-family:'IBM Plex Sans',sans-serif;}
+  .scope-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .scope-col li{font-size:.92rem;padding-left:20px;position:relative;}
+  .scope-col.does li::before{content:"✓";position:absolute;left:0;color:var(--sage);}
+  .scope-col.doesnt li::before{content:"✕";position:absolute;left:0;color:var(--rust);}
+
+  .disclaimer-box{
+    margin-top:28px;border:1px solid var(--rule);background:rgba(156,122,60,0.06);
+    padding:18px 22px;font-size:.85rem;color:var(--ink-soft);border-radius:var(--radius);
+  }
+  .disclaimer-box b{color:var(--ink);}
+
+  footer{
+    border-top:1px solid var(--rule);padding:34px 6%;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-size:.82rem;color:var(--ink-soft);
+  }
+
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(24,35,57,0.55);
+    backdrop-filter:blur(4px);z-index:200;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .modal-overlay.active{opacity:1;pointer-events:all;}
+  .login-box{
+    background:var(--paper-card);border:1px solid var(--rule);
+    padding:36px;border-radius:var(--radius);width:100%;max-width:400px;position:relative;
+  }
+  .close-btn{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--ink-soft);font-size:1.1rem;cursor:pointer;}
+  .portal-switch{display:flex;gap:18px;margin-bottom:22px;border-bottom:1px solid var(--rule);padding-bottom:12px;}
+  .portal-opt{font-size:.82rem;color:var(--ink-soft);cursor:pointer;padding-bottom:8px;}
+  .portal-opt.active{color:var(--ink);font-weight:600;border-bottom:2px solid var(--brass);margin-bottom:-13px;}
+  .form-field{margin-bottom:16px;}
+  .form-field label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:6px;}
+  .form-field input{
+    width:100%;background:var(--paper);border:1px solid var(--rule);padding:11px 14px;
+    border-radius:3px;color:var(--ink);font-size:.92rem;font-family:'IBM Plex Sans',sans-serif;outline:none;
+  }
+  .form-field input:focus{border-color:var(--brass);}
+  .submit-btn{
+    width:100%;background:var(--ink);color:var(--paper);border:none;padding:12px;
+    border-radius:3px;font-weight:500;font-size:.92rem;cursor:pointer;margin-top:6px;
+  }
+  .submit-btn:hover{background:var(--brass-deep);}
+  .modal-note{font-size:.78rem;color:var(--ink-soft);margin-top:14px;line-height:1.5;}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;padding-top:50px;}
+    .stamp-wrap{height:220px;order:-1;}
+    .problem-grid{grid-template-columns:1fr;}
+    .scope-grid{grid-template-columns:1fr;}
+    .scope-col + .scope-col{border-left:none;border-top:1px solid var(--rule);}
+    .nav-right{gap:16px;}
+    .nav-link{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand">
+    <span class="brand-mark">S</span>
+    <span class="brand-name">SetuSaathi</span>
+  </a>
+  <div class="nav-right">
+    <a href="checker.html" class="nav-link">Check requirements</a>
+    <a href="track.html" class="nav-link">Track an application</a>
+    <button class="btn-signin" onclick="openLogin()">Sign in</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hero-kicker">Smart India Hackathon · GovTech</div>
+    <h1>One verified profile. Every department, routed automatically.</h1>
+    <p class="lead">
+      SetuSaathi replaces the maze of separate department portals with a single applicant
+      profile. Tell us your business once — we work out exactly which licenses apply,
+      and send each one to the right department in parallel.
+    </p>
+    <div class="hero-ctas">
+      <a href="checker.html" class="btn-primary">Check what your business needs</a>
+      <button class="btn-outline" onclick="openLogin()">Sign in to the portal</button>
+    </div>
+  </div>
+
+  <div class="stamp-wrap">
+    <div class="stamp-doc">
+      <div class="ln w60" style="height:12px;margin-bottom:16px;"></div>
+      <div class="ln w80"></div>
+      <div class="ln w40"></div>
+      <div class="ln w80"></div>
+      <div class="ln w60"></div>
+      <div class="ln w40"></div>
+      <div class="seal">APPROVED<br>SETUSAATHI</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Business licensing is fragmented by design</h2>
+    <p>A food stall, a pharmacy counter, a small manufacturing unit — each one runs into the same wall of disconnected systems.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h3>Fragmented ownership</h3>
+      <p>Fire NOC, FSSAI license, pollution clearance and municipal approval each live on separate portals that share no common identity.</p>
+    </div>
+    <div class="problem-card">
+      <h3>No visibility</h3>
+      <p>Applicants can't see which department is sitting on their file, or why — they just wait.</p>
+    </div>
+    <div class="problem-card">
+      <h3>Repeated paperwork</h3>
+      <p>Opening a second outlet means re-submitting identity and training proof that were already verified once.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section flow-section">
+  <div class="section-head">
+    <h2>How a request actually moves</h2>
+    <p>Seven steps, from a two-minute intake to a fully cleared business.</p>
+  </div>
+  <div class="flow-list">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <div><h3>Structured intake</h3><p>Industry, business scale and physical attributes — no free text, nothing for the engine to guess at.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <div><h3>Requirement resolution</h3><p>The rule engine matches your input against a configurable table and returns the exact approvals needed, per department.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <div><h3>Profile reuse check</h3><p>Anything already verified on your profile is marked complete. You're only asked for what's genuinely new.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <div><h3>Document collection</h3><p>You upload against the resolved checklist. The platform checks completeness — not authenticity.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">05</div>
+      <div><h3>Multi-department routing</h3><p>Each requirement becomes an independent task on the relevant department's queue, running in parallel.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">06</div>
+      <div><h3>Human verification</h3><p>Officials review and approve or reject with a reason, inside their own dashboard. The platform never decides.</p></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">07</div>
+      <div><h3>One unified status</h3><p>Your business is cleared once every routed task is approved — tracked in one place, not seven.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>What this is — and what it deliberately isn't</h2>
+    <p>A smaller, honest claim beats a big one we can't back.</p>
+  </div>
+  <div class="scope-grid">
+    <div class="scope-col does">
+      <h3>SetuSaathi does</h3>
+      <ul>
+        <li>Resolve the exact license set for your specific business</li>
+        <li>Reuse verified, person-bound documents across outlets</li>
+        <li>Route each requirement to the right department, in parallel</li>
+        <li>Give you one place to track every approval</li>
+      </ul>
+    </div>
+    <div class="scope-col doesnt">
+      <h3>SetuSaathi does not</h3>
+      <ul>
+        <li>Verify document authenticity — that stays with the department</li>
+        <li>Approve or reject anything — a human official always decides</li>
+        <li>Replace NSWS or state industrial portals for large investments</li>
+        <li>Use DigiLocker or pull any live government database in this build</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="disclaimer-box">
+    <b>Prototype disclaimer:</b> This is a Smart India Hackathon demonstration build, not an
+    official government platform. Sign-in below uses locally seeded demo accounts to walk through the three roles.
+  </div>
+</section>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="login-box">
+    <button class="close-btn" onclick="closeLogin()">✕</button>
+    <div class="portal-switch">
+      <span class="portal-opt active" onclick="switchPortal(this,'Applicant')">Applicant</span>
+      <span class="portal-opt" onclick="switchPortal(this,'Official')">Dept official</span>
+      <span class="portal-opt" onclick="switchPortal(this,'Admin')">System admin</span>
+    </div>
+    <h3 id="loginTitle" style="font-size:1.25rem;margin-bottom:6px;">Applicant sign in</h3>
+    <p style="color:var(--ink-soft);font-size:.85rem;margin-bottom:20px;">Demo account — profile already verified for the walkthrough.</p>
+    <form onsubmit="handleRouteLogin(event)">
+      <div class="form-field">
+        <label>Applicant ID or registered mobile</label>
+        <input type="text" id="userInput" value="APL-2026-0889" required>
+      </div>
+      <div class="form-field">
+        <label>Password / security PIN</label>
+        <input type="password" value="123456" required>
+      </div>
+      <button type="submit" class="submit-btn">Continue to portal</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 SetuSaathi — SIH prototype</span>
+  <span>Built for Food &amp; Pharmacy licensing</span>
+</footer>
+
+<script>
+  let currentRole = 'Applicant';
+  function openLogin(){document.getElementById('loginModal').classList.add('active');}
+  function closeLogin(){document.getElementById('loginModal').classList.remove('active');}
+  function switchPortal(el,type){
+    currentRole = type;
+    document.querySelectorAll('.portal-opt').forEach(o=>o.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('loginTitle').innerText = `${type} sign in`;
+    const input = document.getElementById('userInput');
+    if(type==='Official') input.value = 'OFF-MP-808';
+    else if(type==='Admin') input.value = 'ADMIN-ROOT-99';
+    else input.value = 'APL-2026-0889';
+  }
+  function handleRouteLogin(e){
+    e.preventDefault();
+    if(currentRole==='Official') window.location.href='official.html';
+    else if(currentRole==='Admin') window.location.href='admin.html';
+    else window.location.href='dashboard.html';
+  }
+</script>
+</body>
+</html>

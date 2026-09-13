@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetuSaathi — New Business Clearance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182339;--ink-soft:#4B5468;--paper:#F5F1E6;--paper-card:#FCFAF3;
+    --rule:#DAD1BC;--brass:#9C7A3C;--brass-deep:#7C5E2A;--sage:#33604A;--radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.6;padding-bottom:80px;}
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;color:var(--ink);}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(245,241,230,0.92);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--ink);}
+  .brand-name{font-family:'Source Serif 4',serif;font-size:1.15rem;}
+  .exit-link{font-size:.88rem;color:var(--ink-soft);text-decoration:none;}
+  .exit-link:hover{color:var(--ink);}
+
+  .wrap{max-width:760px;margin:44px auto 0;padding:0 6%;}
+
+  .stepper{display:flex;gap:0;margin-bottom:38px;}
+  .step-pip{flex:1;display:flex;flex-direction:column;gap:8px;}
+  .step-pip .bar{height:3px;background:var(--rule);border-radius:2px;}
+  .step-pip.done .bar,.step-pip.active .bar{background:var(--brass);}
+  .step-pip .lbl{font-size:.78rem;color:var(--ink-soft);}
+  .step-pip.active .lbl,.step-pip.done .lbl{color:var(--ink);}
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .card{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:32px;}
+
+  .kicker{font-size:.82rem;color:var(--brass-deep);font-weight:500;margin-bottom:8px;}
+  .card h2{font-size:1.35rem;margin-bottom:8px;}
+  .card>p.sub{color:var(--ink-soft);font-size:.9rem;margin-bottom:24px;}
+
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:6px;}
+  .field label{display:block;font-size:.78rem;color:var(--ink-soft);margin-bottom:8px;}
+  select,input[type=text]{
+    width:100%;background:var(--paper);border:1px solid var(--rule);padding:12px;border-radius:3px;
+    color:var(--ink);font-size:.92rem;font-family:'IBM Plex Sans',sans-serif;outline:none;
+  }
+  select:focus,input:focus{border-color:var(--brass);}
+
+  .req-list{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+  .req-row{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;border-radius:3px;display:flex;justify-content:space-between;align-items:center;font-size:.9rem;}
+  .req-row .scope{font-size:.75rem;color:var(--ink-soft);}
+  .req-row .reused{color:var(--brass-deep);font-size:.78rem;}
+  .req-row .fresh{color:var(--ink-soft);font-size:.78rem;}
+
+  .upload-row{background:var(--paper);border:1px dashed var(--rule);padding:16px 18px;border-radius:3px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:.9rem;}
+  .upload-row.uploaded{border:1px solid var(--sage);background:rgba(51,96,74,0.04);}
+  .upload-btn{background:var(--ink);color:var(--paper);border:none;padding:8px 16px;border-radius:3px;font-size:.82rem;cursor:pointer;}
+  .upload-btn:hover{background:var(--brass-deep);}
+  .uploaded-tag{color:var(--sage);font-size:.82rem;font-weight:500;}
+
+  .review-block{margin-bottom:20px;}
+  .review-block h3{font-size:.95rem;margin-bottom:10px;color:var(--ink);}
+  .review-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--ink-soft);padding:8px 0;border-bottom:1px solid var(--rule);}
+  .review-row span:last-child{color:var(--ink);}
+
+  .actions{display:flex;justify-content:space-between;margin-top:28px;}
+  .btn-next{background:var(--ink);color:var(--paper);border:none;padding:12px 26px;border-radius:3px;font-weight:500;cursor:pointer;font-size:.92rem;}
+  .btn-next:hover{background:var(--brass-deep);}
+  .btn-back{background:transparent;color:var(--ink-soft);border:1px solid var(--rule);padding:12px 24px;border-radius:3px;cursor:pointer;font-size:.92rem;}
+
+  .confirm-box{text-align:center;padding:20px 0;}
+  .confirm-seal{width:70px;height:70px;border:2.5px solid var(--sage);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--sage);font-size:1.6rem;}
+  .confirm-ref{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;color:var(--brass-deep);margin:14px 0;}
+  .confirm-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+  .link-btn{background:var(--ink);color:var(--paper);padding:11px 22px;border-radius:3px;text-decoration:none;font-size:.9rem;}
+  .link-btn.outline{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+
+  @media(max-width:640px){.form-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand"><span class="brand-mark">S</span><span class="brand-name">SetuSaathi</span></a>
+  <a href="dashboard.html" class="exit-link">Save &amp; exit</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="stepper">
+    <div class="step-pip active" id="pip-1"><div class="bar"></div><div class="lbl">1. Business details</div></div>
+    <div class="step-pip" id="pip-2"><div class="bar"></div><div class="lbl">2. Requirements</div></div>
+    <div class="step-pip" id="pip-3"><div class="bar"></div><div class="lbl">3. Documents</div></div>
+    <div class="step-pip" id="pip-4"><div class="bar"></div><div class="lbl">4. Review &amp; submit</div></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="panel active" id="panel-1">
+    <div class="card">
+      <div class="kicker">Structured intake</div>
+      <h2>Tell us about the business</h2>
+      <p class="sub">Just the facts the rule engine needs to resolve your checklist.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label>Business name</label>
+          <input type="text" id="bizName" value="Verma Food Corner">
+        </div>
+        <div class="field">
+          <label>Industry category</label>
+          <select id="ind">
+            <option value="food">Food services / outlet</option>
+            <option value="pharmacy">Pharmacy counter</option>
+            <option value="manufacturing">Small manufacturing</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Business scale</label>
+          <select id="scale">
+            <option value="micro">Micro unit (&lt; ₹12L turnover)</option>
+            <option value="small">Small unit (&gt; ₹12L turnover)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Premises status</label>
+          <select id="prop">
+            <option value="rented">Rented property</option>
+            <option value="owned">Owned property</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions" style="justify-content:flex-end;">
+        <button class="btn-next" onclick="goStep(2)">Resolve requirements →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="panel" id="panel-2">
+    <div class="card">
+      <div class="kicker">Requirement resolution</div>
+      <h2 id="resolvedTitle">Here's what your business needs</h2>
+      <p class="sub">Anything already verified on your profile is marked reused automatically.</p>
+      <div class="req-list" id="reqList"></div>
+      <div class="actions">
+        <button class="btn-back" onclick="goStep(1)">← Back</button>
+        <button class="btn-next" onclick="goStep(3)">Continue to documents →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="panel" id="panel-3">
+    <div class="card">
+      <div class="kicker">Document collection</div>
+      <h2>Upload what's new</h2>
+      <p class="sub">The platform checks completeness — department verifies authenticity.</p>
+      <div id="uploadList"></div>
+      <div class="actions">
+        <button class="btn-back" onclick="goStep(2)">← Back</button>
+        <button class="btn-next" onclick="goStep(4)">Continue to review →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="panel" id="panel-4">
+    <div class="card" id="reviewCard">
+      <div class="kicker">Final review</div>
+      <h2>Check everything before routing</h2>
+      <p class="sub">Once submitted, each requirement is routed to its department in parallel.</p>
+      <div class="review-block">
+        <h3>Business</h3>
+        <div class="review-row"><span>Name</span><span id="revName">—</span></div>
+        <div class="review-row"><span>Category</span><span id="revInd">—</span></div>
+        <div class="review-row"><span>Scale</span><span id="revScale">—</span></div>
+        <div class="review-row"><span>Premises</span><span id="revProp">—</span></div>
+      </div>
+      <div class="review-block">
+        <h3>Clearances to be routed</h3>
+        <div id="revReqs"></div>
+      </div>
+      <div class="actions">
+        <button class="btn-back" onclick="goStep(3)">← Back</button>
+        <button class="btn-next" onclick="submitApp()">Submit application</button>
+      </div>
+    </div>
+
+    <div class="card" id="confirmCard" style="display:none;">
+      <div class="confirm-box">
+        <div class="confirm-seal">✓</div>
+        <h2>Application submitted</h2>
+        <p style="color:var(--ink-soft);font-size:.92rem;">Every requirement below has been routed to its department.</p>
+        <div class="confirm-ref" id="confirmRef">REQ-2026-0000</div>
+        <div class="confirm-actions">
+          <a href="track.html" class="link-btn" onclick="return goTrack()">Track this application</a>
+          <a href="dashboard.html" class="link-btn outline">Back to dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const rulesDb = {
+    food: {
+      micro: [["FSSAI basic registration","Person",true],["Health NOC","Location",false],["Shop establishment","Instance",false]],
+      small: [["FSSAI state license","Person",true],["Fire safety NOC","Location",false],["Trade license","Location",false],["GUMASTA license","Instance",false]]
+    },
+    pharmacy: {
+      micro: [["Pharmacist certification","Person",true],["Drug retail license","Instance",false],["Rent agreement","Location",false]],
+      small: [["Pharmacist certification","Person",true],["Drug wholesale license","Instance",false],["Fire safety NOC","Location",false],["Pollution clearance","Location",false]]
+    },
+    manufacturing: {
+      micro: [["FSSAI manufacturing license","Person",true],["Pollution board consent","Location",false],["Factory license","Instance",false]],
+      small: [["Central food license","Person",true],["High hazard fire clearance","Location",false],["Pollution CTO","Location",false],["Factory registration ID","Instance",false]]
+    }
+  };
+
+  const labels = {food:'Food services / outlet',pharmacy:'Pharmacy counter',manufacturing:'Small manufacturing',
+    micro:'Micro unit',small:'Small unit',rented:'Rented property',owned:'Owned property'};
+
+  let currentReqs = [];
+
+  function goStep(n){
+    for(let i=1;i<=4;i++){
+      document.getElementById('panel-'+i).classList.toggle('active', i===n);
+      const pip = document.getElementById('pip-'+i);
+      pip.classList.toggle('active', i===n);
+      pip.classList.toggle('done', i<n);
+    }
+    if(n===2) resolveRequirements();
+    if(n===3) buildUploadList();
+    if(n===4) buildReview();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function resolveRequirements(){
+    const ind = document.getElementById('ind').value;
+    const scale = document.getElementById('scale').value;
+    currentReqs = rulesDb[ind][scale];
+    const list = document.getElementById('reqList');
+    list.innerHTML = '';
+    currentReqs.forEach(([name,scope,reused])=>{
+      const row = document.createElement('div');
+      row.className = 'req-row';
+      row.innerHTML = `<div>${name} <span class="scope">· ${scope}-bound</span></div>` +
+        (reused ? `<span class="reused">Reused from your profile</span>` : `<span class="fresh">New — document needed</span>`);
+      list.appendChild(row);
+    });
+    document.getElementById('resolvedTitle').innerText = `${currentReqs.length} clearances resolved for this business`;
+  }
+
+  function buildUploadList(){
+    const box = document.getElementById('uploadList');
+    box.innerHTML = '';
+    currentReqs.filter(r=>!r[2]).forEach(([name],i)=>{
+      const row = document.createElement('div');
+      row.className = 'upload-row';
+      row.id = 'up-'+i;
+      row.innerHTML = `<span>${name}</span><button class="upload-btn" onclick="markUploaded(${i})">Upload file</button>`;
+      box.appendChild(row);
+    });
+    if(box.innerHTML === ''){
+      box.innerHTML = '<p style="color:var(--ink-soft);font-size:.9rem;">Everything needed is already verified on your profile — nothing new to upload.</p>';
+    }
+  }
+
+  function markUploaded(i){
+    const row = document.getElementById('up-'+i);
+    row.classList.add('uploaded');
+    row.querySelector('button').outerHTML = '<span class="uploaded-tag">✓ Uploaded</span>';
+  }
+
+  function buildReview(){
+    document.getElementById('revName').innerText = document.getElementById('bizName').value || '—';
+    document.getElementById('revInd').innerText = labels[document.getElementById('ind').value];
+    document.getElementById('revScale').innerText = labels[document.getElementById('scale').value];
+    document.getElementById('revProp').innerText = labels[document.getElementById('prop').value];
+    const box = document.getElementById('revReqs');
+    box.innerHTML = '';
+    currentReqs.forEach(([name,scope])=>{
+      const row = document.createElement('div');
+      row.className = 'review-row';
+      row.innerHTML = `<span>${name}</span><span>${scope}-bound</span>`;
+      box.appendChild(row);
+    });
+  }
+
+  let lastRef = '';
+  function submitApp(){
+    lastRef = 'REQ-2026-' + Math.floor(1000+Math.random()*8999);
+    document.getElementById('confirmRef').innerText = lastRef;
+    document.getElementById('reviewCard').style.display = 'none';
+    document.getElementById('confirmCard').style.display = 'block';
+  }
+  function goTrack(){
+    if(window.sessionStorage){
+      sessionStorage.setItem('lastRef', lastRef);
+    }
+    return true;
+  }
+</script>
+</body>
+</html>

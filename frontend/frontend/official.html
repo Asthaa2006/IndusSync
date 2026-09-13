@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SetuSaathi — Department Official Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182339;--ink-soft:#4B5468;--paper:#F5F1E6;--paper-card:#FCFAF3;
+    --rule:#DAD1BC;--brass:#9C7A3C;--brass-deep:#7C5E2A;
+    --success:#33604A;--warning:#A6763C;--danger:#8F3B2A;--radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.6;padding-bottom:60px;}
+  h1,h2,h3{font-family:'Source Serif 4',serif;font-weight:500;color:var(--ink);}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(245,241,230,0.92);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{width:30px;height:30px;border:1.5px solid var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:.8rem;color:var(--ink);}
+  .brand-name{font-family:'Source Serif 4',serif;font-size:1.15rem;}
+
+  .container{max-width:1080px;margin:40px auto 0;padding:0 6%;}
+
+  .profile-card{
+    background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);
+    padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px;
+  }
+  .official-info{display:flex;align-items:center;gap:16px;}
+  .avatar{width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:center;font-weight:600;font-family:'Source Serif 4',serif;}
+  .dept-badge{background:rgba(156,122,60,0.1);border:1px solid rgba(156,122,60,0.35);color:var(--brass-deep);padding:4px 12px;border-radius:20px;font-size:.75rem;}
+
+  .legend-box{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:18px 24px;margin-bottom:32px;}
+  .legend-title{font-size:.85rem;color:var(--ink);margin-bottom:12px;font-weight:500;font-family:'Source Serif 4',serif;}
+  .legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+  .legend-item{display:flex;align-items:flex-start;gap:10px;font-size:.83rem;color:var(--ink-soft);}
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+
+  .section-title{font-size:1.25rem;margin-bottom:18px;}
+
+  .req-card{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:24px;margin-bottom:18px;}
+  .req-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px;}
+  .license-name{font-size:1.08rem;font-weight:500;font-family:'Source Serif 4',serif;}
+  .applicant-meta{font-size:.85rem;color:var(--ink-soft);margin-top:2px;}
+  .ai-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:500;white-space:nowrap;}
+  .ai-tag.critical{background:rgba(143,59,42,0.1);border:1px solid rgba(143,59,42,0.35);color:var(--danger);}
+  .ai-tag.safe{background:rgba(51,96,74,0.1);border:1px solid rgba(51,96,74,0.35);color:var(--success);}
+
+  .req-docs{font-size:.88rem;color:var(--ink-soft);}
+  .action-btns{display:flex;gap:12px;margin-top:18px;}
+  .btn-approve{background:var(--success);color:var(--paper);border:none;padding:9px 20px;border-radius:3px;font-weight:500;cursor:pointer;font-size:.86rem;}
+  .btn-approve:hover{opacity:.9;}
+  .btn-reject{background:transparent;color:var(--danger);border:1px solid var(--danger);padding:9px 20px;border-radius:3px;font-weight:500;cursor:pointer;font-size:.86rem;}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(24,35,57,0.55);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+  .modal-overlay.active{opacity:1;pointer-events:all;}
+  .reject-box{background:var(--paper-card);border:1px solid var(--rule);border-radius:var(--radius);padding:28px;width:100%;max-width:440px;}
+  textarea{width:100%;background:var(--paper);border:1px solid var(--rule);color:var(--ink);padding:12px;border-radius:3px;margin:14px 0;outline:none;resize:vertical;min-height:88px;font-family:'IBM Plex Sans',sans-serif;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="brand"><span class="brand-mark">S</span><span class="brand-name">SetuSaathi</span></a>
+  <span style="font-size:.85rem;color:var(--ink-soft);">Department portal</span>
+</nav>
+
+<div class="container">
+
+  <div class="profile-card">
+    <div class="official-info">
+      <div class="avatar">RS</div>
+      <div>
+        <h2 style="font-size:1.15rem;">Dr. Ramesh Sharma</h2>
+        <p style="font-size:.85rem;color:var(--ink-soft);">Senior Licensing Officer · ID OFF-MP-808</p>
+      </div>
+    </div>
+    <span class="dept-badge">Food Safety &amp; Public Health Dept</span>
+  </div>
+
+  <div class="legend-box">
+    <div class="legend-title">Risk tagging legend</div>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="dot" style="background:var(--danger);"></span><span><b>Critical:</b> document expiry anomaly detected — review first</span></div>
+      <div class="legend-item"><span class="dot" style="background:var(--warning);"></span><span><b>Moderate:</b> address mismatch flagged</span></div>
+      <div class="legend-item"><span class="dot" style="background:var(--success);"></span><span><b>Low risk:</b> all submitted credentials internally consistent</span></div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Pending approval queue</h3>
+
+  <div id="queueList">
+    <div class="req-card" id="req-1">
+      <div class="req-header">
+        <div>
+          <div class="license-name">FSSAI Food Safety License (State)</div>
+          <div class="applicant-meta">Applicant: Rohan Verma · Premises: Food outlet (rented) · Ref #REQ-2026-8901</div>
+        </div>
+        <div class="ai-tag critical"><span>●</span> Critical — lease expiring in &lt;15 days</div>
+      </div>
+      <p class="req-docs">Submitted: lease agreement, GSTIN, identity proof on file.</p>
+      <div class="action-btns">
+        <button class="btn-approve" onclick="approveReq('req-1')">Approve clearance</button>
+        <button class="btn-reject" onclick="openRejectModal('req-1','FSSAI License — Rohan Verma')">Reject request</button>
+      </div>
+    </div>
+
+    <div class="req-card" id="req-2">
+      <div class="req-header">
+        <div>
+          <div class="license-name">Health &amp; Sanitation NOC</div>
+          <div class="applicant-meta">Applicant: Priya Sharma · Premises: Organic bakery · Ref #REQ-2026-8902</div>
+        </div>
+        <div class="ai-tag safe"><span>●</span> Low risk — all credentials consistent</div>
+      </div>
+      <p class="req-docs">Submitted: water test certificate, municipal tax receipt.</p>
+      <div class="action-btns">
+        <button class="btn-approve" onclick="approveReq('req-2')">Approve clearance</button>
+        <button class="btn-reject" onclick="openRejectModal('req-2','Health NOC — Priya Sharma')">Reject request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="rejectModal">
+  <div class="reject-box">
+    <h3 style="font-size:1.1rem;">Provide rejection reason</h3>
+    <p style="font-size:.85rem;color:var(--ink-soft);margin-top:4px;" id="rejectTargetText">Application rejection</p>
+    <textarea id="rejectReason" placeholder="State the exact deficiency, e.g. invalid lease agreement date..."></textarea>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeRejectModal()" style="background:transparent;color:var(--ink-soft);border:1px solid var(--rule);padding:8px 16px;border-radius:3px;cursor:pointer;">Cancel</button>
+      <button onclick="confirmReject()" style="background:var(--danger);color:#fff;border:none;padding:8px 16px;border-radius:3px;cursor:pointer;font-weight:500;">Confirm rejection</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let activeReqId = null;
+  function approveReq(id){
+    const card = document.getElementById(id);
+    card.style.opacity = "0.7";
+    card.innerHTML = `<div style="color:var(--success);font-weight:500;">✓ Clearance approved and digitally signed.</div>`;
+  }
+  function openRejectModal(id,title){
+    activeReqId = id;
+    document.getElementById('rejectTargetText').innerText = `Target: ${title}`;
+    document.getElementById('rejectModal').classList.add('active');
+  }
+  function closeRejectModal(){
+    document.getElementById('rejectModal').classList.remove('active');
+    document.getElementById('rejectReason').value = '';
+  }
+  function confirmReject(){
+    const reason = document.getElementById('rejectReason').value.trim();
+    if(!reason) return alert('Please enter a rejection reason');
+    const card = document.getElementById(activeReqId);
+    card.style.opacity = "0.7";
+    card.innerHTML = `<div style="color:var(--danger);font-weight:500;">✕ Application rejected.<br><span style="font-size:.85rem;color:var(--ink-soft);">Reason logged: "${reason}"</span></div>`;
+    closeRejectModal();
+  }
+</script>
+</body>
+</html>
